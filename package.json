@@ -1,0 +1,81 @@
+{
+  "name": "primitive-protocol",
+  "version": "1.0.0",
+  "description": "Primitive Smart Contract Protocol with Jupiter Framework for Solana",
+  "main": "index.js",
+  "scripts": {
+    "build": "anchor build",
+    "deploy": "anchor deploy",
+    "test": "anchor test",
+    "dev": "anchor test --skip-local-validator",
+    "start": "craco start",
+    "build:frontend": "craco build",
+    "test:frontend": "craco test",
+    "eject": "react-scripts eject",
+    "deploy:devnet": "ts-node scripts/deploy.ts",
+    "test:all": "npm run test && npm run test:frontend"
+  },
+  "keywords": [
+    "solana",
+    "defi",
+    "jupiter",
+    "staking",
+    "yield",
+    "primitive"
+  ],
+  "author": "LinuxMakesMehappy",
+  "license": "MIT",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.28.0",
+    "@solana/spl-token": "^0.3.9",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.34",
+    "@solana/wallet-adapter-wallets": "^0.19.23",
+    "@solana/web3.js": "^1.87.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@testing-library/jest-dom": "^6.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^20.0.0",
+    "assert": "^2.1.0",
+    "buffer": "^6.0.3",
+    "chai": "^4.3.0",
+    "crypto-browserify": "^3.12.1",
+    "https-browserify": "^1.0.0",
+    "mocha": "^10.0.0",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "ts-node": "^10.9.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
