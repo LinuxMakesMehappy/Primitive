@@ -7,6 +7,7 @@ import { StakingPanel } from './StakingPanel';
 import { ProtocolMetrics } from './ProtocolMetrics';
 import { UserProfile } from './UserProfile';
 import { YieldOpportunities } from './YieldOpportunities';
+import { CustomWalletButton } from './CustomWalletButton';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
@@ -53,7 +54,7 @@ export const Dashboard: React.FC = () => {
           <p className="text-gray-300 mb-8 text-lg">
             Connect your wallet to access the advanced staking protocol with Jupiter yield farming
           </p>
-          <WalletMultiButton className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105" />
+          <WalletMultiButton className="wallet-adapter-button" />
         </div>
       </div>
     );
@@ -83,7 +84,7 @@ export const Dashboard: React.FC = () => {
                 ))}
               </div>
             </div>
-            <WalletMultiButton className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" />
+            <CustomWalletButton />
           </div>
         </div>
       </header>
