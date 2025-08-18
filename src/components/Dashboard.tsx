@@ -84,7 +84,9 @@ export const Dashboard: React.FC = () => {
                 ))}
               </div>
             </div>
-            <CustomWalletButton />
+            <div className="relative z-50">
+              <CustomWalletButton />
+            </div>
           </div>
         </div>
       </header>
