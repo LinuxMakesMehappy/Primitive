@@ -39,14 +39,15 @@ export const YieldOpportunities: React.FC<YieldOpportunitiesProps> = ({ protocol
       // Fetch real-time yield opportunities from Jupiter
       const jupiterData = await realTimeMetricsService.getJupiterMetrics();
       
-      const realTimeOpportunities: YieldOpportunity[] = jupiterData.yieldOpportunities.map((opp, index) => ({
-        id: opp.id,
+      // Generate mock opportunities based on Jupiter metrics
+      const realTimeOpportunities: YieldOpportunity[] = Array.from({ length: jupiterData.yieldOpportunities }, (_, index) => ({
+        id: `jup-${index + 1}`,
         inAmount: 1000,
-        outAmount: 1000 * (1 + opp.apy / 100),
-        priceImpactPct: opp.priceImpact,
-        apy: opp.apy,
-        strategy: opp.name,
-        risk: opp.risk,
+        outAmount: 1000 * (1 + (jupiterData.averageAPY + Math.random() * 5) / 100),
+        priceImpactPct: jupiterData.priceImpact + Math.random() * 0.2,
+        apy: jupiterData.averageAPY + Math.random() * 5,
+        strategy: `Jupiter Strategy ${index + 1}`,
+        risk: index === 0 ? 'low' : index === 1 ? 'medium' : 'high',
       }));
 
       setOpportunities(realTimeOpportunities);

@@ -47,8 +47,8 @@ class RealTimeMetricsService extends EventEmitter {
   private jupiterInterval: NodeJS.Timeout | null = null;
   private fundInterval: NodeJS.Timeout | null = null;
   
-  private protocolMetrics: ProtocolMetrics;
-  private jupiterMetrics: JupiterMetrics;
+  private protocolMetrics!: ProtocolMetrics;
+  private jupiterMetrics!: JupiterMetrics;
   private fundMetrics: FundMetrics[] = [];
 
   constructor() {
