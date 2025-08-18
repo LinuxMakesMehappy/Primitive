@@ -16,7 +16,7 @@ export const CustomWalletButton: React.FC<CustomWalletButtonProps> = ({ classNam
 
   return (
     <div className={`relative z-50 ${className || ''}`}>
-      <WalletMultiButton className="wallet-adapter-button-trigger" />
+      <WalletMultiButton className="wallet-adapter-button-trigger !bg-transparent" />
       
       {/* Custom dropdown menu for connected wallet */}
       {publicKey && (

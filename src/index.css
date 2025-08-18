@@ -153,6 +153,69 @@ main {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
+/* Remove black background from wallet icon */
+.wallet-adapter-button-trigger img,
+.wallet-adapter-button-trigger svg {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Style the wallet button text and icon container */
+.wallet-adapter-button-trigger > div {
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Remove any background from the wallet icon wrapper */
+.wallet-adapter-button-trigger .wallet-adapter-button-icon {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Additional wallet button styling to remove unwanted backgrounds */
+.wallet-adapter-button-trigger * {
+  background: transparent !important;
+}
+
+.wallet-adapter-button-trigger .wallet-adapter-button-icon-wrapper {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure the wallet button text is properly styled */
+.wallet-adapter-button-trigger .wallet-adapter-button-text {
+  background: transparent !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+/* Remove any black backgrounds from wallet adapter components */
+.wallet-adapter-button-trigger,
+.wallet-adapter-button-trigger *,
+.wallet-adapter-button-trigger > *,
+.wallet-adapter-button-trigger .wallet-adapter-button-icon,
+.wallet-adapter-button-trigger .wallet-adapter-button-icon-wrapper,
+.wallet-adapter-button-trigger .wallet-adapter-button-text {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Ensure the button itself has the gradient background */
+.wallet-adapter-button-trigger {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background-color: transparent !important;
+}
+
 .wallet-adapter-button-trigger:hover {
   background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%) !important;
   transform: translateY(-1px) !important;
