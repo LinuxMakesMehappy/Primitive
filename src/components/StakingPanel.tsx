@@ -32,7 +32,7 @@ export const StakingPanel: React.FC<StakingPanelProps> = ({ protocolClient }) =>
 
     try {
       const info = await protocolClient.getUserInfo(publicKey);
-      setUserInfo(info);
+      // No need to set userInfo since we're using real-time data
     } catch (error) {
       console.error('Failed to fetch user info:', error);
     }
@@ -222,26 +222,26 @@ export const StakingPanel: React.FC<StakingPanelProps> = ({ protocolClient }) =>
             <label className="block text-gray-300 text-sm font-medium mb-2">
               Amount to Unstake (SOL)
             </label>
-            <input
-              type="number"
-              value={stakingAmount}
-              onChange={(e) => setStakingAmount((e.target as HTMLInputElement).value)}
-              placeholder="Enter amount"
-              max={userInfo?.currentStake || 0}
-              className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-            {userInfo && (
-              <p className="text-sm text-gray-400 mt-1">
-                Available: {userInfo.currentStake.toFixed(2)} SOL
-              </p>
-            )}
+                         <input
+               type="number"
+               value={stakingAmount}
+               onChange={(e) => setStakingAmount((e.target as HTMLInputElement).value)}
+               placeholder="Enter amount"
+               max={userData?.currentStake || 0}
+               className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+             />
+             {userData && (
+               <p className="text-sm text-gray-400 mt-1">
+                 Available: {userData.currentStake.toFixed(2)} SOL
+               </p>
+             )}
           </div>
 
-          <button
-            onClick={handleUnstake}
-            disabled={loading || !stakingAmount || !userInfo?.isActive}
-            className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
-          >
+                     <button
+             onClick={handleUnstake}
+             disabled={loading || !stakingAmount || !userData}
+             className="w-full bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
+           >
             {loading ? 'Processing...' : 'Unstake Tokens'}
           </button>
         </div>
@@ -256,11 +256,11 @@ export const StakingPanel: React.FC<StakingPanelProps> = ({ protocolClient }) =>
             </p>
           </div>
 
-          <button
-            onClick={handleClaimYield}
-            disabled={loading || !userInfo?.isActive}
-            className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
-          >
+                     <button
+             onClick={handleClaimYield}
+             disabled={loading || !userData || userData.pendingYield <= 0}
+             className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200"
+           >
             {loading ? 'Processing...' : 'Claim Yield'}
           </button>
         </div>
