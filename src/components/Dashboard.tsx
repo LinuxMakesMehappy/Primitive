@@ -6,6 +6,7 @@ import { ProtocolClient } from '../services/protocol-client';
 import { StakingPanel } from './StakingPanel';
 import { ProtocolMetrics } from './ProtocolMetrics';
 import { EnhancedProtocolMetrics } from './EnhancedProtocolMetrics';
+import { RealWalletMetrics } from './RealWalletMetrics';
 import { UserProfile } from './UserProfile';
 import { YieldOpportunities } from './YieldOpportunities';
 import { CustomWalletButton } from './CustomWalletButton';
@@ -103,6 +104,7 @@ export const Dashboard: React.FC = () => {
             {activeTab === 'dashboard' && (
               <div className="space-y-8">
                 <EnhancedProtocolMetrics />
+                <RealWalletMetrics />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <StakingPanel protocolClient={protocolClient} />
                   <YieldOpportunities protocolClient={protocolClient} />
