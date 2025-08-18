@@ -14,7 +14,7 @@ import { CustomWalletButton } from './CustomWalletButton';
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 const PROGRAM_ID = new PublicKey('Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS');
-const connection = new Connection('https://api.mainnet-beta.solana.com');
+const connection = new Connection('https://solana-mainnet.rpc.extrnode.com');
 
 export const Dashboard: React.FC = () => {
   const { publicKey, connected } = useWallet();

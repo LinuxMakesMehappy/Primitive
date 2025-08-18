@@ -1,7 +1,8 @@
 import React from 'react';
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { EventEmitter } from 'events';
+import { fallbackRPCConnection } from './rpc-fallback';
 
 export interface WalletMetrics {
   solBalance: number;
@@ -46,7 +47,6 @@ export interface StakingAccount {
 }
 
 class RealWalletMetricsService extends EventEmitter {
-  private connection: Connection;
   private walletPubkey: string | null = null;
   private interval: NodeJS.Timeout | null = null;
   private walletMetrics: WalletMetrics | null = null;
@@ -54,10 +54,6 @@ class RealWalletMetricsService extends EventEmitter {
 
   constructor() {
     super();
-    this.connection = new Connection(
-      process.env.REACT_APP_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
-      'confirmed'
-    );
   }
 
   public connect(walletPubkey: string) {
@@ -99,25 +95,41 @@ class RealWalletMetricsService extends EventEmitter {
     try {
       const pubkey = new PublicKey(this.walletPubkey);
       
-      // Fetch SOL balance
-      const solBalance = await this.connection.getBalance(pubkey);
+      // Fetch SOL balance with fallback RPC
+      let solBalance = 0;
+      try {
+        solBalance = await fallbackRPCConnection.getBalance(pubkey);
+      } catch (error) {
+        console.warn('Failed to fetch SOL balance, using fallback:', error);
+        solBalance = 0;
+      }
       
-      // Fetch token accounts
-      const tokenAccounts = await this.connection.getParsedTokenAccountsByOwner(
-        pubkey,
-        { programId: TOKEN_PROGRAM_ID }
-      );
+      // Fetch token accounts with fallback RPC
+      let tokenAccounts = { value: [] };
+      try {
+        tokenAccounts = await fallbackRPCConnection.getParsedTokenAccountsByOwner(
+          pubkey,
+          { programId: TOKEN_PROGRAM_ID }
+        );
+      } catch (error) {
+        console.warn('Failed to fetch token accounts:', error);
+      }
 
-      // Fetch recent transactions
-      const signatures = await this.connection.getSignaturesForAddress(
-        pubkey,
-        { limit: 10 }
-      );
+      // Fetch recent transactions with fallback RPC
+      let signatures = [];
+      try {
+        signatures = await fallbackRPCConnection.getSignaturesForAddress(
+          pubkey,
+          { limit: 10 }
+        );
+      } catch (error) {
+        console.warn('Failed to fetch transaction signatures:', error);
+      }
 
       const transactions = await Promise.all(
         signatures.map(async (sig) => {
           try {
-            const tx = await this.connection.getParsedTransaction(sig.signature, {
+            const tx = await fallbackRPCConnection.getParsedTransaction(sig.signature, {
               maxSupportedTransactionVersion: 0,
             });
             
@@ -181,6 +193,7 @@ class RealWalletMetricsService extends EventEmitter {
       this.emit('metricsUpdated', this.walletMetrics);
     } catch (error) {
       console.error('Failed to fetch wallet metrics:', error);
+      // Emit error but don't crash the service
       this.emit('error', error);
     }
   }
