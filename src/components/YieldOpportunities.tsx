@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { ProtocolClient } from '../services/protocol-client';
+import { realTimeMetricsService } from '../services/real-time-metrics';
 
 interface YieldOpportunitiesProps {
   protocolClient: ProtocolClient | null;
@@ -35,57 +36,20 @@ export const YieldOpportunities: React.FC<YieldOpportunitiesProps> = ({ protocol
     try {
       setLoading(true);
       
-      // Simulate fetching yield opportunities from Jupiter
-      // In a real implementation, this would call protocolClient.getYieldOpportunities()
-      const mockOpportunities: YieldOpportunity[] = [
-        {
-          id: '1',
-          inAmount: 1000,
-          outAmount: 1050,
-          priceImpactPct: 0.5,
-          apy: 12.5,
-          strategy: 'SOL-USDC LP',
-          risk: 'low',
-        },
-        {
-          id: '2',
-          inAmount: 1000,
-          outAmount: 1080,
-          priceImpactPct: 1.2,
-          apy: 18.2,
-          strategy: 'SOL-RAY LP',
-          risk: 'medium',
-        },
-        {
-          id: '3',
-          inAmount: 1000,
-          outAmount: 1120,
-          priceImpactPct: 2.8,
-          apy: 24.8,
-          strategy: 'SOL-SRM LP',
-          risk: 'high',
-        },
-        {
-          id: '4',
-          inAmount: 1000,
-          outAmount: 1030,
-          priceImpactPct: 0.3,
-          apy: 8.9,
-          strategy: 'SOL-mSOL Staking',
-          risk: 'low',
-        },
-        {
-          id: '5',
-          inAmount: 1000,
-          outAmount: 1090,
-          priceImpactPct: 1.8,
-          apy: 21.5,
-          strategy: 'SOL-JUP LP',
-          risk: 'medium',
-        },
-      ];
+      // Fetch real-time yield opportunities from Jupiter
+      const jupiterData = await realTimeMetricsService.getJupiterMetrics();
+      
+      const realTimeOpportunities: YieldOpportunity[] = jupiterData.yieldOpportunities.map((opp, index) => ({
+        id: opp.id,
+        inAmount: 1000,
+        outAmount: 1000 * (1 + opp.apy / 100),
+        priceImpactPct: opp.priceImpact,
+        apy: opp.apy,
+        strategy: opp.name,
+        risk: opp.risk,
+      }));
 
-      setOpportunities(mockOpportunities);
+      setOpportunities(realTimeOpportunities);
     } catch (error) {
       console.error('Failed to fetch yield opportunities:', error);
     } finally {
